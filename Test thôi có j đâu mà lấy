@@ -1,0 +1,33 @@
+-- Load KeyGuardian
+local KeyGuardLibrary = loadstring(game:HttpGet("https://cdn.keyguardian.org/library/v1.0.0.lua"))()
+
+-- Dữ liệu xác thực từ KeyGuardian
+local trueData = "6350c84248ee48fc9c3e6244aa60f017"
+local falseData = "059ff1ee3a67422687c7fa65c2d24dbf"
+
+-- Thiết lập KeyGuardian
+KeyGuardLibrary.Set({
+	publicToken = "e5095cf243d342faa9961a2f5046de48",
+	privateToken = "5cf2a80b30994c83961c391ddbd80054",
+	trueData = trueData,
+	falseData = falseData,
+})
+
+-- Lấy key từ getgenv().key
+local key = getgenv().key
+if not key then
+    game.Players.LocalPlayer:Kick("Chưa nhập key! Vui lòng nhập key bằng getgenv().key = 'ZUMARU-xxxx'")
+    return
+end
+
+-- Kiểm tra key
+local result = KeyGuardLibrary.validateDefaultKey(key)
+if result ~= trueData then
+    game.Players.LocalPlayer:Kick("Sai key! Lấy key tại: https://keyguardian.org")
+    return
+end
+
+-- Nếu key đúng thì tải script chính
+pcall(function()
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/skibidi1d/Premium/refs/heads/main/den.txt"))()
+end)
